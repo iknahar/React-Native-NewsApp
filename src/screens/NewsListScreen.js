@@ -4,11 +4,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Cards from '../components/Cards';
 
 
-const NewsListScreen = () => {
-
+const NewsListScreen = props => {
+    console.log(props);
     return (
         <View>
-            <TouchableOpacity onPress={()=> console.log("press")}>
+            <TouchableOpacity onPress={() => {
+                props.navigation.navigate('NewsItem')
+            }}>
                 <Cards></Cards>
             </TouchableOpacity>
 
