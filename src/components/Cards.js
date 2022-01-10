@@ -6,7 +6,7 @@ const Cards = props => {
 
     return (
         <TouchableOpacity onPress={() => {
-                props.navigation.navigate('NewsItem')
+                props.navigation.navigate({ routeName:'NewsItem'})
             }
         }>
             <View style={styles.card}>

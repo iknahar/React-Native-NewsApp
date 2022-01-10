@@ -6,6 +6,8 @@ import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import AppNavigator from './src/navigation/AppNavigator';
+import store from './src/redux/store';
+import { Provider } from 'react-redux';
 
 
 const loadFonts = () => {
@@ -39,7 +41,9 @@ export default function App() {
   }
 
   return (
-    <AppNavigator />
+    <Provider store={store}>
+      <AppNavigator />
+      </Provider>
     // <View>
   
     //   <Header title="News App" />
