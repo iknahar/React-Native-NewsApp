@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Platform, Image, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector } from 'react-redux';
 
 import * as newsAction from '../redux/actions/newsAction';
 
@@ -9,6 +9,8 @@ const Cards = props => {
 
 
     const dispatch = useDispatch();
+
+    const isFav = useSelector(state => state.news.favorites.some(article => article.url === props.url));
 
     return (
         <TouchableOpacity onPress={() => {
@@ -24,7 +26,7 @@ const Cards = props => {
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>{props.title.length >25 ? props.title.slice(0,25)+'...': props.title}</Text>
                     <MaterialIcons
-                        name="favorite-border"
+                        name={ isFav ? 'favorite': 'favorite-border'}
                         size={24} color="#72bcd4"
                         onPress={() => {
                             dispatch(newsAction.toggleFav(props.url))
