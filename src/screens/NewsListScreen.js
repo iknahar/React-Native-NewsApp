@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, Platform, Image,  } from 'react-native';
+import { StyleSheet, Text, View, Platform, Image, FlatList } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Cards from '../components/Cards';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,9 +17,23 @@ const NewsListScreen = props => {
     console.log(articles);
   
     return (
-        <View>
-            <Cards navigation={props.navigation} />
-        </View>
+
+        <FlatList
+            data={articles}
+            keyExtractor={item => item.url}
+            renderItem={({ item }) => (
+                <Cards
+                    navigation={props.navigation}
+                    title={item.title}
+                    description={item.description}
+                    image={item.urlToImage}
+                    url={item.url}
+                />
+            )}
+        />
+        // <View>
+        //     <Cards navigation={props.navigation} />
+        // </View>
     );
 };
 

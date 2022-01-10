@@ -1,4 +1,4 @@
-import { FETCH_ARTICLES } from "../actions/newsAction";
+import { FETCH_ARTICLES, TOGGLE_FAVORITES } from "../actions/newsAction";
 
 const initialSate = {
     articles: [],
@@ -12,6 +12,17 @@ export default function (state = initialSate, action) {
             return {
                 ...state,
                 articles: action.payload
+            }
+        case TOGGLE_FAVORITES:
+            const index = state.favorites.findIndex(article => article.url === action.payload);
+            if (index >= 0) {
+                const favorites = [...state.favorites];
+                favorites.splice(index, 1);
+                return {...state, favorites: favorites}
+            }
+            else {
+                const article = state.articles.find(article => article.url === action.payload);
+                return {...state, favorites: state.favorites.concat(article)}
             }
     }
     return state;

@@ -1,8 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, Platform, Image, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+
+import * as newsAction from '../redux/actions/newsAction';
 
 const Cards = props => {
+
+
+    const dispatch = useDispatch();
 
     return (
         <TouchableOpacity onPress={() => {
@@ -12,14 +18,22 @@ const Cards = props => {
             <View style={styles.card}>
                 <View style={styles.imageContainer}>
                     {/* <Image style={styles.image} source={ require('../../assets/ScreenShot_20220108152310.png') }/> */}
-                    <Image style={styles.image} source={{ uri: 'https://www.who.int/images/default-source/mca/mca-covid-19/coronavirus-2.tmb-1024v.jpg?Culture=en&sfvrsn=4dba955c_6' }} />
+                    <Image style={styles.image} source={{ uri: props.image }} />
                 </View>
+                {/* //.length > 25 ? props.title.splice(0, 25) : props.title */}
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Covid cases top 1.17 lakh; infection spreads among doctors</Text>
-                    <MaterialIcons name="favorite-border" size={24} color="#72bcd4" />
+                    <Text style={styles.title}>{props.title.length >25 ? props.title.slice(0,25)+'...': props.title}</Text>
+                    <MaterialIcons
+                        name="favorite-border"
+                        size={24} color="#72bcd4"
+                        onPress={() => {
+                            dispatch(newsAction.toggleFav(props.url))
+                        }}
+                    
+                    />
                 </View>
                 <View style={styles.description}>
-                    <Text style={styles.descriptionText}>India revised the home quarantine rules for international arrivals as the country’s Covid-19 count surged to more than 1.17 lakh infections on Friday. </Text>
+                    <Text style={styles.descriptionText}>{props.description.length >150 ? props.description.slice(0,150)+'...': props.description}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -69,7 +83,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     description: {
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        overflow:'hidden'
     },
     descriptionText: {
         fontFamily: 'newsreader-light',
